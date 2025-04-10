@@ -1,5 +1,5 @@
 import { Download, Menu, X } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Button } from './ui/button'
 import { Theme, useTheme } from './theme-provider'
@@ -14,9 +14,26 @@ const navLinks = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
 
   const { setTheme } = useTheme()
   const toggleMenu = () => setIsOpen(prev => !prev)
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsOpen(false)
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isOpen])
 
   return (
     <header className="fixed top-0 left-0 z-50 w-full bg-white/70 shadow backdrop-blur">
@@ -57,9 +74,11 @@ export default function Navbar() {
 
       {/* Mobile Dropdown Menu */}
       {isOpen && (
-        <div className="flex flex-col space-y-3 px-6 py-4 shadow md:hidden">
+        <div
+          ref={menuRef}
+          className="flex flex-col space-y-3 px-6 py-4 shadow md:hidden">
           {navLinks.map(link => (
-            <Button>
+            <Button asChild>
               <a
                 key={link.id}
                 href={`#${link.id}`}
