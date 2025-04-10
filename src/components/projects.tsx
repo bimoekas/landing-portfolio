@@ -9,7 +9,7 @@ const Projects = () => {
   return (
     <section
       id="projects"
-      className="flex min-h-screen flex-col items-center justify-center">
+      className="mt-16 flex min-h-screen flex-col items-center justify-center">
       <SectionTitle title="Projects" />
       <Carousel className="mt-8 w-screen">
         <CarouselContent>

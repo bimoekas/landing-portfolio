@@ -37,8 +37,13 @@ export default function Navbar() {
               <a href={`#${link.id}`}>{link.label}</a>
             </Button>
           ))}
-          <Button className="w-28">
-            Resume <Download className="ml-2 h-4 w-4" />
+          <Button className="w-28" asChild>
+            <a
+              href="/CV - Bimo Eka Saputra - English.pdf"
+              download
+              target="_blank">
+              Resume <Download className="ml-2 h-4 w-4" />
+            </a>
           </Button>
         </div>
 
@@ -63,8 +68,13 @@ export default function Navbar() {
               </a>
             </Button>
           ))}
-          <Button className="w-full">
-            Resume <Download className="ml-2 h-4 w-4" />
+          <Button className="w-full" asChild>
+            <a
+              href="/CV - Bimo Eka Saputra - English.pdf"
+              download
+              target="_blank">
+              Resume <Download className="ml-2 h-4 w-4" />
+            </a>
           </Button>
           <Label className="mt-4 text-xl font-semibold">Theme</Label>
           <div className="flex space-x-2">

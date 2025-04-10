@@ -33,7 +33,7 @@ const About = () => {
                   <img
                     src={item}
                     alt="Stacks"
-                    className="aspect-square h-32 w-32 object-fill"
+                    className="aspect-square h-20 w-20 object-fill"
                     width={300}
                     height={300}
                   />
