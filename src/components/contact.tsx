@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 
 import { ContactForm, ContactFormSchema } from '@/types/form/ContactForm'
+import emailjs from '@emailjs/browser'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import SectionTitle from './SectionTitle'
@@ -16,8 +17,12 @@ import {
 } from './ui/form'
 import { Input } from './ui/input'
 import { Textarea } from './ui/textarea'
+import { useState } from 'react'
+import { Loader2 } from 'lucide-react'
 
 const Contact = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
   const form = useForm<ContactForm>({
     resolver: zodResolver(ContactFormSchema),
     defaultValues: {
@@ -27,8 +32,27 @@ const Contact = () => {
     },
   })
 
-  const onSubmit = (values: ContactForm) => {
-    console.log(values)
+  const onSubmit = async (values: ContactForm) => {
+    try {
+      setIsLoading(true)
+
+      const templateParams = {
+        name: values.name,
+        email: values.email,
+        message: values.message,
+      }
+
+      await emailjs.send(
+        'service_72cqwx9',
+        'template_699xcli',
+        templateParams,
+        'rjGD0upct9sN7206V',
+      )
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -97,7 +121,10 @@ const Contact = () => {
               />
             </CardContent>
             <CardFooter className="flex justify-between">
-              <Button type="submit">Send Message</Button>
+              <Button type="submit" disabled={isLoading} className="w-36">
+                {isLoading && <Loader2 className="animate-spin" />}
+                {!isLoading && 'Send Message'}
+              </Button>
             </CardFooter>
           </Card>
         </form>
