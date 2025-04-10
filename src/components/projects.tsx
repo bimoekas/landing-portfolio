@@ -19,7 +19,7 @@ const Projects = () => {
                 <CardContent className="p-0">
                   <img
                     src={item.image}
-                    className="h-[30em] w-full rounded-t-md object-cover"
+                    className="h-[15em] w-full rounded-t-md object-cover sm:h-[30em]"
                   />
                   <div className="p-4">
                     <h1 className="text-xl font-bold">{item.title}</h1>
