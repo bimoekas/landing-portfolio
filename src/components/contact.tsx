@@ -19,6 +19,7 @@ import { Input } from './ui/input'
 import { Textarea } from './ui/textarea'
 import { useState } from 'react'
 import { Loader2 } from 'lucide-react'
+import { toast } from 'sonner'
 
 const Contact = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -43,17 +44,40 @@ const Contact = () => {
       }
 
       await emailjs.send(
-        'service_72cqwx9',
-        'template_699xcli',
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         templateParams,
-        'rjGD0upct9sN7206V',
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
       )
+
+      toast.success('Message sent successfully!', {
+        description:
+          'I appreciate your message — I’ll get back to you as soon as I can.',
+        duration: 3000,
+        classNames: {
+          title: 'text-primary',
+          description: 'text-primary',
+        },
+      })
     } catch (error) {
       console.error(error)
+
+      toast.error('Failed to send message', {
+        description:
+          'Oops! Something went wrong. Please try again or reach out via another method.',
+        duration: 3000,
+        classNames: {
+          title: 'text-primary',
+          description: 'text-primary',
+        },
+      })
     } finally {
       setIsLoading(false)
+      form.reset()
     }
   }
+
+  console.log(import.meta.env.VITE_EMAILJS_SERVICE_ID)
 
   return (
     <section

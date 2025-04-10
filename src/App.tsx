@@ -1,3 +1,5 @@
+import { Toaster } from '@/components/ui/sonner'
+
 import About from './components/about'
 import Contact from './components/contact'
 import Home from './components/home'
@@ -18,6 +20,7 @@ function App() {
           <Projects />
           <Contact />
         </main>
+        <Toaster richColors={true} />
       </div>
     </ThemeProvider>
   )
